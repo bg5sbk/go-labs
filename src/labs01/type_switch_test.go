@@ -1,4 +1,4 @@
-package labs
+package labs01
 
 import "testing"
 
@@ -54,7 +54,7 @@ func Benchmark_TypeSwitch(b *testing.B) {
 func Benchmark_NormalSwitch(b *testing.B) {
 	var a = new(A)
 
-	for i := 0; i < b.N; i ++ {
+	for i := 0; i < b.N; i++ {
 		NormalSwitch(a)
 	}
 }
@@ -62,7 +62,7 @@ func Benchmark_NormalSwitch(b *testing.B) {
 func Benchmark_InterfaceSwitch(b *testing.B) {
 	var a = new(A)
 
-	for i := 0; i < b.N; i ++ {
+	for i := 0; i < b.N; i++ {
 		InterfaceSwitch(a)
 	}
 }

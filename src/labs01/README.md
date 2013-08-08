@@ -2,7 +2,7 @@
 
 执行结果：
 
-    dada-imac:misc dada$ go test -test.bench=".*" labs
+    dada-imac:misc dada$ go test -test.bench=".*" labs01
     testing: warning: no tests to run
     PASS
     Benchmark_TypeSwitch	50000000	        33.0 ns/op
