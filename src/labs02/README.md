@@ -1,5 +1,7 @@
 测试值传参和指针传参的效率。
 
+实验结果：
+
     dada-imac:misc dada$ go test -test.bench="." labs02
     testing: warning: no tests to run
     PASS

@@ -1,5 +1,7 @@
 测试对象创建的效率。
 
+实验结果：
+
     dada-imac:misc dada$ go test -test.bench="." labs03
     testing: warning: no tests to run
     PASS
