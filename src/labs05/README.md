@@ -31,8 +31,8 @@
     Benchmark_Int16Div      1000000000           2.08 ns/op
     Benchmark_Int32Div      2000000000           1.62 ns/op
     Benchmark_Int64Div      2000000000           1.57 ns/op
-    Benchmark_Float32Div    50000000            44.3 ns/op
-    Benchmark_Float64Div    50000000            48.0 ns/op
+    Benchmark_Float32Div    50000000             44.3 ns/op
+    Benchmark_Float64Div    50000000             48.0 ns/op
     ok  	labs05	49.453s    
 
 结论：浮点数除法明显更慢，尽量把除法转换为乘法运算。
