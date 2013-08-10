@@ -75,9 +75,15 @@ func (c *Condition) Match(n *BigStruct) bool {
 	return false
 }
 
-func NewQuery(name string, op int, value int) *Query {
+func NewQuery(name string, operator string, value int) *Query {
 	var t = reflect.TypeOf(BigStruct{})
 	var f, _ = t.FieldByName(name)
+
+	var op = OP_EQ
+	switch operator {
+	case "==":
+		op = OP_EQ
+	}
 
 	return &Query{
 		[]*Condition{

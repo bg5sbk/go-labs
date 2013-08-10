@@ -3,7 +3,7 @@ package labs07
 import "testing"
 import "reflect"
 
-var data *BigStruct
+var data *BigStruct = &BigStruct{C30: 88888888}
 
 func init() {
 	for i := 0; i < 1000; i++ {
@@ -16,7 +16,7 @@ func init() {
 
 func Loop1() *BigStruct {
 	for n := data; n != nil; n = n.next {
-		if n.C30 == 0 {
+		if n.C30 == 88888888 {
 			return n
 		}
 	}
@@ -70,7 +70,8 @@ func Loop5(name string, value interface{}) *BigStruct {
 func Loop6(query *Query) *BigStruct {
 	for n := data; n != nil; n = n.next {
 		if query.Match(n) {
-			return n
+			var nn = *n
+			return &nn
 		}
 	}
 	return nil
@@ -89,7 +90,7 @@ func Benchmark_Loop1(b *testing.B) {
 func Benchmark_Loop2(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Loop2(func(n *BigStruct) bool {
-			return n.C30 == 0
+			return n.C30 == 88888888
 		})
 	}
 }
@@ -99,7 +100,7 @@ func Benchmark_Loop2(b *testing.B) {
 func Benchmark_Loop3(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Loop3(func(n BigStruct) bool {
-			return n.C30 == 0
+			return n.C30 == 88888888
 		})
 	}
 }
@@ -109,7 +110,7 @@ func Benchmark_Loop3(b *testing.B) {
 func Benchmark_Loop4(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Loop4(func(n *BigStruct) bool {
-			return n.C30 == 0
+			return n.C30 == 88888888
 		})
 	}
 }
@@ -118,14 +119,14 @@ func Benchmark_Loop4(b *testing.B) {
 //
 func Benchmark_Loop5(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Loop5("C30", 0)
+		Loop5("C30", 88888888)
 	}
 }
 
 // 测试指针取值（自定义查询表达式的可能性）
 //
 func Benchmark_Loop6(b *testing.B) {
-	var query = NewQuery("C30", OP_EQ, 0)
+	var query = NewQuery("C30", "==", 88888888)
 
 	for i := 0; i < b.N; i++ {
 		Loop6(query)
@@ -151,13 +152,13 @@ func Test_Loop4(t *testing.T) {
 }
 
 func Test_Loop5(t *testing.T) {
-	if Loop5("C30", 0) == nil {
+	if Loop5("C30", 88888888) == nil {
 		t.Fail()
 	}
 }
 
 func Test_Loop6(t *testing.T) {
-	var query = NewQuery("C30", OP_EQ, 0)
+	var query = NewQuery("C30", "==", 88888888)
 
 	if Loop6(query) == nil {
 		t.Fail()
