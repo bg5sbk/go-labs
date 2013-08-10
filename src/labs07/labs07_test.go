@@ -1,40 +1,7 @@
 package labs07
 
 import "testing"
-
-type BigStruct struct {
-	next *BigStruct
-	C01  int
-	C02  int
-	C03  int
-	C04  int
-	C05  int
-	C06  int
-	C07  int
-	C08  int
-	C09  int
-	C10  int
-	C11  int
-	C12  int
-	C13  int
-	C14  int
-	C15  int
-	C16  int
-	C17  int
-	C18  int
-	C19  int
-	C20  int
-	C21  int
-	C22  int
-	C23  int
-	C24  int
-	C25  int
-	C26  int
-	C27  int
-	C28  int
-	C29  int
-	C30  int
-}
+import "reflect"
 
 var data *BigStruct
 
@@ -88,6 +55,27 @@ func Loop4(callback func(*BigStruct) bool) *BigStruct {
 	return nil
 }
 
+func Loop5(name string, value interface{}) *BigStruct {
+	for n := data; n != nil; n = n.next {
+		var v = reflect.ValueOf(n)
+
+		if reflect.DeepEqual(v.Elem().FieldByName(name).Interface(), value) {
+			return n
+		}
+	}
+
+	return nil
+}
+
+func Loop6(query *Query) *BigStruct {
+	for n := data; n != nil; n = n.next {
+		if query.Match(n) {
+			return n
+		}
+	}
+	return nil
+}
+
 // 基准测试
 //
 func Benchmark_Loop1(b *testing.B) {
@@ -126,6 +114,24 @@ func Benchmark_Loop4(b *testing.B) {
 	}
 }
 
+// 测试反射取值（自定义查询表达式的可能性）
+//
+func Benchmark_Loop5(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Loop5("C30", 0)
+	}
+}
+
+// 测试指针取值（自定义查询表达式的可能性）
+//
+func Benchmark_Loop6(b *testing.B) {
+	var query = NewQuery("C30", OP_EQ, 0)
+
+	for i := 0; i < b.N; i++ {
+		Loop6(query)
+	}
+}
+
 func Test_Loop4(t *testing.T) {
 	var a = new(BigStruct)
 	a.C30 = 100
@@ -140,6 +146,20 @@ func Test_Loop4(t *testing.T) {
 	}
 
 	if b.C30 != c.C30 {
+		t.Fail()
+	}
+}
+
+func Test_Loop5(t *testing.T) {
+	if Loop5("C30", 0) == nil {
+		t.Fail()
+	}
+}
+
+func Test_Loop6(t *testing.T) {
+	var query = NewQuery("C30", OP_EQ, 0)
+
+	if Loop6(query) == nil {
 		t.Fail()
 	}
 }
