@@ -4,18 +4,24 @@
 
     dada-imac:labs dada$ go test -test.bench="." labs07
     PASS
-    Benchmark_Loop1    500000          4178 ns/op
-    Benchmark_Loop2    500000          4969 ns/op
-    Benchmark_Loop3    100000         14771 ns/op
-    Benchmark_Loop4     10000        134952 ns/op
-    ok  	labs07	7.672s
+    Benchmark_Loop1   500000          4288 ns/op
+    Benchmark_Loop2   500000          5055 ns/op
+    Benchmark_Loop3   100000         14649 ns/op
+    Benchmark_Loop4    10000        133929 ns/op
+    Benchmark_Loop5     5000        586665 ns/op
+    Benchmark_Loop6   500000          6332 ns/op
+    ok      labs07  13.977s
 
-确定最后一种方式不会导致外部修改数据：
+确认算法有效：
 
-    dada-imac:labs dada$ go test -v labs07
+    dada-imac:labs dada$ go test labs07 -v
     === RUN Test_Loop4
     --- PASS: Test_Loop4 (0.00 seconds)
+    === RUN Test_Loop5
+    --- PASS: Test_Loop5 (0.00 seconds)
+    === RUN Test_Loop6
+    --- PASS: Test_Loop6 (0.00 seconds)
     PASS
-    ok  	labs07	0.014s
+    ok      labs07  0.016s
 
-结论：既要防止外部回调函数不会误改数据，只能牺牲性换数据安全性。
+结论：有空做个查询表达式解析器吧。
