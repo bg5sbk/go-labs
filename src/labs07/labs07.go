@@ -51,25 +51,26 @@ type Condition struct {
 	op     int
 	tp     int
 	offset uintptr
-	value  uint64
+	value  unsafe.Pointer
 }
 
 func (q *Query) Match(n *BigStruct) bool {
+	var nn = uintptr(unsafe.Pointer(n))
 	for _, c := range q.conditions {
-		if c.Match(n) == false {
+		if c.Match(nn) == false {
 			return false
 		}
 	}
 	return true
 }
 
-func (c *Condition) Match(n *BigStruct) bool {
+func (c *Condition) Match(n uintptr) bool {
 	switch c.op {
 	case OP_EQ:
-		var b = unsafe.Pointer(uintptr(unsafe.Pointer(n)) + c.offset)
+		var b = unsafe.Pointer(n + c.offset)
 		switch c.tp {
 		case TP_INT:
-			return int(c.value) == *(*int)(b)
+			return *(*int)(c.value) == *(*int)(b)
 		}
 	}
 	return false
@@ -91,7 +92,7 @@ func NewQuery(name string, operator string, value int) *Query {
 				op:     op,
 				tp:     TP_INT,
 				offset: f.Offset,
-				value:  uint64(value),
+				value:  unsafe.Pointer(&value),
 			},
 		},
 	}
