@@ -79,7 +79,7 @@ func NewQuery(name string, operator string, value int) *Query {
 	var t = reflect.TypeOf(BigStruct{})
 	var f, _ = t.FieldByName(name)
 
-	var op = OP_EQ
+	var op int
 	switch operator {
 	case "==":
 		op = OP_EQ
