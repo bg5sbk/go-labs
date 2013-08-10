@@ -88,12 +88,16 @@ func Loop4(callback func(*BigStruct) bool) *BigStruct {
 	return nil
 }
 
+// 基准测试
+//
 func Benchmark_Loop1(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Loop1()
 	}
 }
 
+// 测试指针传递进行查找的效率（外部可修改内部数据）
+//
 func Benchmark_Loop2(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Loop2(func(n *BigStruct) bool {
@@ -102,6 +106,8 @@ func Benchmark_Loop2(b *testing.B) {
 	}
 }
 
+// 测试值传递进行查找的效率（外部不可修改内部数据）
+//
 func Benchmark_Loop3(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Loop3(func(n BigStruct) bool {
@@ -110,9 +116,11 @@ func Benchmark_Loop3(b *testing.B) {
 	}
 }
 
+// 测试复制数据后传递指针进行查找的效率（外部不可修改内部数据）
+//
 func Benchmark_Loop4(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Loop2(func(n *BigStruct) bool {
+		Loop4(func(n *BigStruct) bool {
 			return n.C30 == 0
 		})
 	}
