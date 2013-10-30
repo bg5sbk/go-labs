@@ -133,6 +133,16 @@ func Benchmark_Loop6(b *testing.B) {
 	}
 }
 
+// 测试指针取值（自定义查询表达式的可能性）
+//
+func Benchmark_Loop7(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		var query = NewQuery("C30", "==", 88888888)
+
+		Loop6(query)
+	}
+}
+
 func Test_Loop4(t *testing.T) {
 	var a = new(BigStruct)
 	a.C30 = 100
