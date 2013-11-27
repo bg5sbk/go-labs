@@ -12,3 +12,5 @@ Benchmark_Method4         200000              8838 ns/op
 Benchmark_Method5         200000              8721 ns/op
 ok      labs17  11.189s
 ```
+
+还可以再继续优化初始时候的数值转字符串，数值转字符串也是比较大的消耗。
