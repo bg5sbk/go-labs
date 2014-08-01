@@ -2,16 +2,14 @@ package labs21
 
 import "testing"
 
-func Benchmark_Go_Call_C1(b *testing.B) {
+func Benchmark_Go_Call_C(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		cfunc1()
+		cfunc()
 	}
 }
 
-/*
-func Benchmark_Go_Call_C2(b *testing.B) {
+func Benchmark_GO_Call_GO(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		cfunc2()
+		gofunc()
 	}
 }
-*/

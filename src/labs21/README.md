@@ -3,11 +3,12 @@ Go的runtime包中使用goc机制实现Go的底层结构，所以判断goc机制
 实验结果：
 
 ```
-$ go test labs21 --bench="."
+$ go test  -gcflags '-N' --bench="."
 testing: warning: no tests to run
 PASS
-Benchmark_Go_Call_C1	1000000000	         2.25 ns/op
-ok  	labs21	2.489s
+Benchmark_Go_Call_C	500000000	         3.84 ns/op
+Benchmark_GO_Call_GO	500000000	         3.78 ns/op
+ok  	labs21	4.593s
 ```
 
 对比于labs20中的测试结果，效率的确高了很多，但是goc机制不允许包含标准c的头文件，是一个比较麻烦的事情，但是假设要用go实现一个脚本语言或调用脚本语言，用goc机制会获得更高的执行效率，当然实现起来代价也高了很多就是了。

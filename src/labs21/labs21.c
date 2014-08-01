@@ -1,4 +1,4 @@
 
-void ·cfunc1() {
+void ·cfunc() {
 	
 }

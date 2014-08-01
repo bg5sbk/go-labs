@@ -1,3 +1,7 @@
 package labs21
 
-func cfunc1()
+func cfunc()
+
+func gofunc() {
+
+}
