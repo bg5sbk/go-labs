@@ -1,4 +1,4 @@
-测试jsmalloc和malloc在go程序中是否有性能差别。
+测试jemalloc和malloc在go程序中是否有性能差别。
 
 实验结果：
 
