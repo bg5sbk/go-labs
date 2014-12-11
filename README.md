@@ -22,3 +22,4 @@
 * labs20 - 测试Go调用C和C调用Go的效率差异
 * labs21 - 个测试goc机制调用c的实验
 * labs22 - 尝试把CGO生成的runtime·cgocall替换为runtime·asmcgocall
+* labs23 - 测试interface{}类型转换判断和布尔值判断效率差异
