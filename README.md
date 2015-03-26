@@ -26,3 +26,5 @@
 | labs22 | 尝试把CGO生成的runtime·cgocall替换为runtime·asmcgocall |
 | labs23 | 测试interface{}类型转换判断和布尔值判断效率差异 |
 | labs24 | 测试binary.Write和硬编码的效率差异 |
+| labs25 | 测试LockOSThread()对chan消息处理的影响 |
+| labs26 | 比较直接调用函数和反射调用函数的效率差别 |
