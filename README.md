@@ -29,3 +29,4 @@
 | labs25 | 测试LockOSThread()对chan消息处理的影响 |
 | labs26 | 比较直接调用函数和反射调用函数的效率差别 |
 | labs27 | 测试不修改runtime代码的情况下获取goid的效率 |
+| labs28 | 测试`[]byte`转`string`的效率 |
