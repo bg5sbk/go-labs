@@ -32,17 +32,17 @@ dada-imac:labs29 dada$ go test -v
 PASS
 ok  	github.com/idada/go-labs/labs29	50.738s
 
-dada-imac:labs29 dada$ ls -la
+dada-imac:labs29 dada$ ls -lah
 total 9192
-drwxr-xr-x@ 10 dada  staff      340  4 22 01:54 .
-drwxr-xr-x@ 34 dada  staff     1156  4 22 00:05 ..
--rw-r--r--@  1 dada  staff     1415  4 21 19:43 README.md
--rwxr-xr-x@  1 dada  staff    46368  4 22 09:22 json.gzip1
--rwxr-xr-x@  1 dada  staff    25778  4 22 09:22 json.gzip5
--rwxr-xr-x@  1 dada  staff    18457  4 22 09:22 json.gzip9
--rwxr-xr-x@  1 dada  staff  4180000  4 22 09:22 json.normal
--rwxr-xr-x@  1 dada  staff   408426  4 22 09:22 json.snappy
--rw-r--r--@  1 dada  staff     4123  4 22 09:22 labs29_test.go
+drwxr-xr-x@ 10 dada  staff   340B  4 22 01:54 .
+drwxr-xr-x@ 34 dada  staff   1.1K  4 22 00:05 ..
+-rw-r--r--@  1 dada  staff   1.6K  4 22 09:24 README.md
+-rwxr-xr-x@  1 dada  staff    45K  4 22 09:22 json.gzip1
+-rwxr-xr-x@  1 dada  staff    25K  4 22 09:22 json.gzip5
+-rwxr-xr-x@  1 dada  staff    18K  4 22 09:22 json.gzip9
+-rwxr-xr-x@  1 dada  staff   4.0M  4 22 09:22 json.normal
+-rwxr-xr-x@  1 dada  staff   399K  4 22 09:22 json.snappy
+-rw-r--r--@  1 dada  staff   4.0K  4 22 09:22 labs29_test.go
 ```
 
 实验结论：实验证明各种流压缩算法的吞吐量都高于json序列化过程，所以没必要用太高级压缩算法，可以用最高压缩比gzip
