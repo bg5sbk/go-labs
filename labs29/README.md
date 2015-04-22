@@ -7,37 +7,42 @@ dada-imac:labs29 dada$ go test -v
 === RUN Test_Normal
 --- PASS: Test_Normal (0.16s)
 === RUN Test_Gzip_Level1
---- PASS: Test_Gzip_Level1 (0.14s)
+--- PASS: Test_Gzip_Level1 (0.13s)
 === RUN Test_Gzip_Level5
---- PASS: Test_Gzip_Level5 (0.16s)
+--- PASS: Test_Gzip_Level5 (0.15s)
 === RUN Test_Gzip_Level9
---- PASS: Test_Gzip_Level9 (0.16s)
+--- PASS: Test_Gzip_Level9 (0.15s)
 === RUN Test_Snappy
---- PASS: Test_Snappy (0.18s)
+--- PASS: Test_Snappy (0.14s)
 === RUN Test_Normal_10S
 --- PASS: Test_Normal_10S (10.00s)
-	labs29_test.go:174: 28177
+	labs29_test.go:155: 28 MB/S
 === RUN Test_Gzip_10S_Level1
 --- PASS: Test_Gzip_10S_Level1 (10.00s)
-	labs29_test.go:190: 31500
+	labs29_test.go:173: 29 MB/S
 === RUN Test_Gzip_10S_Level5
 --- PASS: Test_Gzip_10S_Level5 (10.00s)
-	labs29_test.go:206: 26868
+	labs29_test.go:191: 27 MB/S
 === RUN Test_Gzip_10S_Level9
 --- PASS: Test_Gzip_10S_Level9 (10.00s)
-	labs29_test.go:222: 26867
+	labs29_test.go:208: 25 MB/S
 === RUN Test_Snappy2_10S
 --- PASS: Test_Snappy2_10S (10.00s)
-	labs29_test.go:237: 22354
+	labs29_test.go:224: 21 MB/S
 PASS
-ok  	github.com/idada/go-labs/labs29	50.795s
+ok  	github.com/idada/go-labs/labs29	50.738s
 
-dada-imac:labs29 dada$ ls -la json.*
--rwxr-xr-x@ 1 dada  staff    46063  4 21 19:40 json.gzip1
--rwxr-xr-x@ 1 dada  staff    25765  4 21 19:40 json.gzip5
--rwxr-xr-x@ 1 dada  staff    18445  4 21 19:40 json.gzip9
--rwxr-xr-x@ 1 dada  staff  4180000  4 21 19:40 json.normal
--rwxr-xr-x@ 1 dada  staff   408426  4 21 19:40 json.snappy
+dada-imac:labs29 dada$ ls -la
+total 9192
+drwxr-xr-x@ 10 dada  staff      340  4 22 01:54 .
+drwxr-xr-x@ 34 dada  staff     1156  4 22 00:05 ..
+-rw-r--r--@  1 dada  staff     1415  4 21 19:43 README.md
+-rwxr-xr-x@  1 dada  staff    46368  4 22 09:22 json.gzip1
+-rwxr-xr-x@  1 dada  staff    25778  4 22 09:22 json.gzip5
+-rwxr-xr-x@  1 dada  staff    18457  4 22 09:22 json.gzip9
+-rwxr-xr-x@  1 dada  staff  4180000  4 22 09:22 json.normal
+-rwxr-xr-x@  1 dada  staff   408426  4 22 09:22 json.snappy
+-rw-r--r--@  1 dada  staff     4123  4 22 09:22 labs29_test.go
 ```
 
 实验结论：实验证明各种流压缩算法的吞吐量都高于json序列化过程，所以没必要用太高级压缩算法，可以用最高压缩比gzip
