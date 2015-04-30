@@ -31,3 +31,4 @@
 | labs27 | 测试不修改runtime代码的情况下获取goid的效率 |
 | labs28 | 测试`[]byte`转`string`的效率 |
 | labs29 | 测试不同压缩算法压缩json数据的压缩比和压缩效率。|
+| labs30 | 内存数据库事务Demo |

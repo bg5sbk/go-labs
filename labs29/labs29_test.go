@@ -28,6 +28,18 @@ type Action struct {
 	NewData M `json:",omitempty"`
 }
 
+func (t *Transaction) ByteSize() int {
+	s := 0
+	for i := 0; i < len(t.Actions); i++ {
+		s += t.Actions[i].ByteSize()
+	}
+	return 8 + 4 + len(t.API) + 8 + 4 + len(t.Actions) + s
+}
+
+func (a *Action) ByteSize() int {
+	return 4 + len(a.Type) + 4 + len(a.Table) + len(a.OldData)*4 + len(a.OldData)*4
+}
+
 var TestData = Transaction{
 	Time: time.Now().Nanosecond(), API: "make_item", Pid: 123, Actions: []Action{
 		{Type: "Update", Table: "player_info",
@@ -46,13 +58,19 @@ var TestData = Transaction{
 	},
 }
 
+const TestLines = 10000
+
+func Test_ByteSize(t *testing.T) {
+	t.Log(TestData.ByteSize()*TestLines/1000/1000, "MB")
+}
+
 func Test_Normal(t *testing.T) {
 	var (
 		f, _ = os.OpenFile("./json.normal", os.O_WRONLY|os.O_CREATE, 0777)
 		b    = bufio.NewWriter(f)
 		e    = json.NewEncoder(b)
 	)
-	for i := 0; i < 10000; i++ {
+	for i := 0; i < TestLines; i++ {
 		e.Encode(TestData)
 	}
 	b.Flush()
@@ -66,7 +84,7 @@ func Test_Gzip_Level1(t *testing.T) {
 		g, _ = gzip.NewWriterLevel(b, 1)
 		e    = json.NewEncoder(g)
 	)
-	for i := 0; i < 10000; i++ {
+	for i := 0; i < TestLines; i++ {
 		e.Encode(TestData)
 	}
 	g.Flush()
@@ -82,7 +100,7 @@ func Test_Gzip_Level5(t *testing.T) {
 		g, _ = gzip.NewWriterLevel(b, 5)
 		e    = json.NewEncoder(g)
 	)
-	for i := 0; i < 10000; i++ {
+	for i := 0; i < TestLines; i++ {
 		e.Encode(TestData)
 	}
 	g.Flush()
@@ -98,7 +116,7 @@ func Test_Gzip_Level9(t *testing.T) {
 		g, _ = gzip.NewWriterLevel(b, 9)
 		e    = json.NewEncoder(g)
 	)
-	for i := 0; i < 10000; i++ {
+	for i := 0; i < TestLines; i++ {
 		e.Encode(TestData)
 	}
 	g.Flush()
@@ -114,7 +132,7 @@ func Test_Snappy(t *testing.T) {
 		b    = bufio.NewWriter(g)
 		e    = json.NewEncoder(b)
 	)
-	for i := 0; i < 10000; i++ {
+	for i := 0; i < TestLines; i++ {
 		e.Encode(TestData)
 	}
 	b.Flush()
