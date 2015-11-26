@@ -7,13 +7,13 @@
 我电脑上测试结果如下：
 
 ```
-$ go test -bench="."
+ go test -bench="."
 PASS
-Benchmark_Normal-4	20000000	        56.3 ns/op
-Benchmark_Switch-4	30000000	        48.5 ns/op
-Benchmark_IF1-4   	30000000	        44.8 ns/op
-Benchmark_IF2-4   	30000000	        40.9 ns/op
-ok  	github.com/idada/go-labs/labs31	5.451s
+Benchmark_Normal-4	20000000	        55.6 ns/op
+Benchmark_Switch-4	30000000	        47.2 ns/op
+Benchmark_IF1-4   	30000000	        44.2 ns/op
+Benchmark_IF2-4   	30000000	        40.5 ns/op
+ok  	github.com/idada/go-labs/labs31	5.370s
 ```
 
 呵呵。。。

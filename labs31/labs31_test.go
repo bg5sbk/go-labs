@@ -99,7 +99,6 @@ func Switch(n int) uint {
 }
 
 func IF1(n int) uint {
-	var i = uint(0)
 	if n <= 1<<0 {
 		return 0
 	}
@@ -112,7 +111,6 @@ func IF1(n int) uint {
 	if n <= 1<<3 {
 		return 3
 	}
-	i++
 	if n <= 1<<4 {
 		return 4
 	}
