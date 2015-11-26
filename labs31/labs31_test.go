@@ -2,6 +2,7 @@ package labs31
 
 import (
 	"math/rand"
+	"sort"
 	"testing"
 )
 
@@ -12,8 +13,9 @@ func Test_All(t *testing.T) {
 		b := Switch(n)
 		c := IF1(n)
 		d := IF2(n)
-		if a != b || b != c || c != d || a == 21 {
-			t.Log(n, a, b, c, d)
+		e := uint(Search(n))
+		if a != b || b != c || c != d || d != e || a == 21 {
+			t.Log(n, a, b, c, d, e)
 			t.Fail()
 		}
 	}
@@ -22,6 +24,12 @@ func Test_All(t *testing.T) {
 func Benchmark_Normal(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Normal(rand.Intn(1 << 20))
+	}
+}
+
+func Benchmark_Search(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		Search(rand.Intn(1 << 20))
 	}
 }
 
@@ -48,6 +56,15 @@ func Normal(n int) uint {
 	for ; n > (1<<i) && i <= 20; i++ {
 	}
 	return i
+}
+
+var classes = []int{
+	1 << 0, 1 << 1, 1 << 2, 1 << 3, 1 << 4, 1 << 5, 1 << 6, 1 << 7, 1 << 8, 1 << 9, 1 << 10,
+	1 << 11, 1 << 12, 1 << 13, 1 << 14, 1 << 15, 1 << 16, 1 << 17, 1 << 18, 1 << 19, 1 << 20,
+}
+
+func Search(n int) int {
+	return sort.SearchInts(classes, n)
 }
 
 func Switch(n int) uint {
