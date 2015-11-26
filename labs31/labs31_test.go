@@ -10,9 +10,10 @@ func Test_All(t *testing.T) {
 		n := rand.Intn(1 << 20)
 		a := Normal(n)
 		b := Switch(n)
-		c := IF(n)
-		if a != b || b != c || a == 21 {
-			t.Log(n, a, b, c)
+		c := IF1(n)
+		d := IF2(n)
+		if a != b || b != c || c != d || a == 21 {
+			t.Log(n, a, b, c, d)
 			t.Fail()
 		}
 	}
@@ -30,9 +31,15 @@ func Benchmark_Switch(b *testing.B) {
 	}
 }
 
-func Benchmark_IF(b *testing.B) {
+func Benchmark_IF1(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		IF(rand.Intn(1 << 20))
+		IF1(rand.Intn(1 << 20))
+	}
+}
+
+func Benchmark_IF2(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		IF2(rand.Intn(1 << 20))
 	}
 }
 
@@ -91,7 +98,76 @@ func Switch(n int) uint {
 	return 21
 }
 
-func IF(n int) uint {
+func IF1(n int) uint {
+	var i = uint(0)
+	if n <= 1<<0 {
+		return 0
+	}
+	if n <= 1<<1 {
+		return 1
+	}
+	if n <= 1<<2 {
+		return 2
+	}
+	if n <= 1<<3 {
+		return 3
+	}
+	i++
+	if n <= 1<<4 {
+		return 4
+	}
+	if n <= 1<<5 {
+		return 5
+	}
+	if n <= 1<<6 {
+		return 6
+	}
+	if n <= 1<<7 {
+		return 7
+	}
+	if n <= 1<<8 {
+		return 8
+	}
+	if n <= 1<<9 {
+		return 9
+	}
+	if n <= 1<<10 {
+		return 10
+	}
+	if n <= 1<<11 {
+		return 11
+	}
+	if n <= 1<<12 {
+		return 12
+	}
+	if n <= 1<<13 {
+		return 13
+	}
+	if n <= 1<<14 {
+		return 14
+	}
+	if n <= 1<<15 {
+		return 15
+	}
+	if n <= 1<<16 {
+		return 16
+	}
+	if n <= 1<<17 {
+		return 17
+	}
+	if n <= 1<<18 {
+		return 18
+	}
+	if n <= 1<<19 {
+		return 19
+	}
+	if n <= 1<<20 {
+		return 20
+	}
+	return 21
+}
+
+func IF2(n int) uint {
 	if n <= 1<<10 {
 		if n <= 1<<5 {
 			if n <= 1<<2 {
