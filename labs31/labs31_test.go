@@ -4,18 +4,30 @@ import (
 	"math/rand"
 	"sort"
 	"testing"
+	"time"
 )
+
+var benchx int
+
+func init() {
+	rand.Seed(time.Now().UnixNano())
+	benchx = rand.Intn(1 << 20)
+}
 
 func Test_All(t *testing.T) {
 	for i := 0; i < 1000000; i++ {
-		n := rand.Intn(1 << 20)
+		n := rand.Intn(1<<20) + 2
 		a := Normal(n)
 		b := Switch(n)
 		c := IF1(n)
 		d := IF2(n)
-		e := uint(Search(n))
-		if a != b || b != c || c != d || d != e || a == 21 {
-			t.Log(n, a, b, c, d, e)
+		e := Search(n)
+		f := IF3(n)
+		if f > 21 {
+			f = 21
+		}
+		if a != b || b != c || c != d || d != e || e != f {
+			t.Log(n, a, b, c, d, e, f)
 			t.Fail()
 		}
 	}
@@ -23,31 +35,37 @@ func Test_All(t *testing.T) {
 
 func Benchmark_Normal(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Normal(rand.Intn(1 << 20))
+		Normal(benchx)
 	}
 }
 
 func Benchmark_Search(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Search(rand.Intn(1 << 20))
+		Search(benchx)
 	}
 }
 
 func Benchmark_Switch(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		Switch(rand.Intn(1 << 20))
+		Switch(benchx)
 	}
 }
 
 func Benchmark_IF1(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		IF1(rand.Intn(1 << 20))
+		IF1(benchx)
 	}
 }
 
 func Benchmark_IF2(b *testing.B) {
 	for i := 0; i < b.N; i++ {
-		IF2(rand.Intn(1 << 20))
+		IF2(benchx)
+	}
+}
+
+func Benchmark_IF3(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		IF3(benchx)
 	}
 }
 
@@ -63,8 +81,8 @@ var classes = []int{
 	1 << 11, 1 << 12, 1 << 13, 1 << 14, 1 << 15, 1 << 16, 1 << 17, 1 << 18, 1 << 19, 1 << 20,
 }
 
-func Search(n int) int {
-	return sort.SearchInts(classes, n)
+func Search(n int) uint {
+	return uint(sort.SearchInts(classes, n))
 }
 
 func Switch(n int) uint {
@@ -244,9 +262,40 @@ func IF2(n int) uint {
 					}
 					return 19
 				}
-				return 20
+				if n <= 1<<20 {
+					return 20
+				}
 			}
 		}
 	}
 	return 21
+}
+
+func IF3(n int) uint {
+	n--
+	c := uint(0)
+	if (n & 0xffff0000) != 0 {
+		c += 16
+		n >>= 16
+	}
+	if (n & 0xff00) != 0 {
+		c += 8
+		n >>= 8
+	}
+	if (n & 0xf0) != 0 {
+		c += 4
+		n >>= 4
+	}
+	if (n & 0xc) != 0 {
+		c += 2
+		n >>= 2
+	}
+	if (n & 0x2) != 0 {
+		c++
+		n >>= 1
+	}
+	if n != 0 {
+		c++
+	}
+	return c
 }

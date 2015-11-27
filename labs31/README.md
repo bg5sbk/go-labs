@@ -9,12 +9,15 @@
 ```
 $ go test -bench="."
 PASS
-Benchmark_Normal-4	20000000	        57.1 ns/op
-Benchmark_Search-4	20000000	        62.4 ns/op
-Benchmark_Switch-4	30000000	        47.2 ns/op
-Benchmark_IF1-4   	30000000	        44.3 ns/op
-Benchmark_IF2-4   	30000000	        40.4 ns/op
-ok  	github.com/idada/go-labs/labs31	6.747s
+Benchmark_Normal-4	50000000	        25.6 ns/op
+Benchmark_Search-4	100000000	        21.7 ns/op
+Benchmark_Switch-4	100000000	        12.5 ns/op
+Benchmark_IF1-4   	200000000	         9.14 ns/op
+Benchmark_IF2-4   	300000000	         3.89 ns/op
+Benchmark_IF3-4   	1000000000	         2.37 ns/op
+ok  	github.com/idada/go-labs/labs31	11.822s
 ```
 
 呵呵，蛋好疼。
+
+补充：最后一个IF3测试是由群里的v1zze同学提供的算法，果然牛逼。
