@@ -1,6 +1,7 @@
 package labs31
 
 import (
+	"math"
 	"math/rand"
 	"sort"
 	"testing"
@@ -23,11 +24,14 @@ func Test_All(t *testing.T) {
 		d := IF2(n)
 		e := Search(n)
 		f := IF3(n)
+		g := IF4(n)
+		h := IF5(n)
+		i := SearchInt(n)
 		if f > 21 {
 			f = 21
 		}
-		if a != b || b != c || c != d || d != e || e != f {
-			t.Log(n, a, b, c, d, e, f)
+		if a != b || b != c || c != d || d != e || e != f || f != g || g != h || h != i {
+			t.Log(n, a, b, c, d, e, f, g, h, i)
 			t.Fail()
 		}
 	}
@@ -42,6 +46,12 @@ func Benchmark_Normal(b *testing.B) {
 func Benchmark_Search(b *testing.B) {
 	for i := 0; i < b.N; i++ {
 		Search(benchx)
+	}
+}
+
+func Benchmark_Search2(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		SearchInt(benchx)
 	}
 }
 
@@ -69,6 +79,18 @@ func Benchmark_IF3(b *testing.B) {
 	}
 }
 
+func Benchmark_IF4(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		IF4(benchx)
+	}
+}
+
+func Benchmark_IF5(b *testing.B) {
+	for i := 0; i < b.N; i++ {
+		IF5(benchx)
+	}
+}
+
 func Normal(n int) uint {
 	var i = uint(0)
 	for ; n > (1<<i) && i <= 20; i++ {
@@ -83,6 +105,25 @@ var classes = []int{
 
 func Search(n int) uint {
 	return uint(sort.SearchInts(classes, n))
+}
+
+// copy from search.go:59
+// func Search(n int, f func(int) bool) int
+func SearchInt(n int) uint {
+	// Define f(-1) == false and f(n) == true.
+	// Invariant: f(i-1) == false, f(j) == true.
+	i, j := 0, len(classes)
+	for i < j {
+		h := i + (j-i)/2 // avoid overflow when computing h
+		// i ≤ h < j
+		if classes[h] < n {
+			i = h + 1 // preserves f(i-1) == false
+		} else {
+			j = h // preserves f(j) == true
+		}
+	}
+	// i == j, f(i-1) == false, and f(j) (= f(i)) == true  =>  answer is i.
+	return uint(i)
 }
 
 func Switch(n int) uint {
@@ -298,4 +339,24 @@ func IF3(n int) uint {
 		c++
 	}
 	return c
+}
+
+func IF4(n int) uint {
+	n--
+	ix := math.Ilogb(float64(n))
+	if ix > 20 {
+		ix = 20
+	}
+	ix++
+	return uint(ix)
+}
+
+func IF5(n int) uint {
+	n--
+	ix := (math.Float32bits(float32(n))>>23)&0xff - 127
+	if ix > 20 {
+		ix = 20
+	}
+	ix++
+	return uint(ix)
 }
